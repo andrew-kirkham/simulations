@@ -1,0 +1,12 @@
+Homework 1 questions
+    1. Write your own linear congruential generator with a = 1229, c=1, and M=2048.
+    Take 2N random samples x1,y1,x2,y2,...xN,yN with N = 1000.
+    With this sample, plot the N random points (Xi,Yi) where Xi = xi/M, Yi = yi/M in the box [0,1] x [0,1] and compute an approximate covariance(X,Y).
+
+    2. Modify the random number generator in problem 1 to include a shuffle table and repeat the computation
+
+    3. Repeate problem 1 with the random() function in Python.
+
+    4. Compare your approximate values for covariance(X,Y) from the above questions and discuss the usefullness of covariance(X,Y) as a test for independence.
+
+
