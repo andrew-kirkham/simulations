@@ -19,36 +19,36 @@ def generate_random(array, max):
 
 def generate_data(x0, length):
     #initialize arrays
-    x = []
-    y = []
+    w = []
+    w.append(x0)
 
-    #seed the initial values
-    x.append(x0)
-    y.append(lcg(x0))
+    #generate 2000 values
+    generate_random(w, length)
 
-    #generate 1000 values
-    generate_random(x, length)
-    generate_random(y, length)
+    x = w[::2]
+    y = w[1::2]
+    z = w[2::2]
+    return x,y,z
+
+def generate_scaled_data(x0):
+    l = 25
+    x, y, z = generate_data(x0, 30000)
+    T=[]
+    w=[]
+    for i in range(l):
+        T.append(1/2048 * (x[i] + 1/2048 * y[i]))
+    
+    for k in range(2000):
+        w.append(T[z[k+1] % l])
+        T[z[k+1] % l] = 1/2048 * (x[k+l+1] + 1/2048 * y[k+l+1])
+
+    x = w[::2]
+    y = w[1::2]
+
     return x,y
 
-def scale_data(x0):
-    x, y = generate_data(x0, 1000)
-
-    #scale it by M
-    scaled_x = [ x/2048 for x in x ] 
-    scaled_y = [ y/2048 for y in y ]
-    return scaled_x, scaled_y
-
-def generate_data_set(x0):
-    x,y = generate_data(x0, 1000)
-    T = []
-    for i in range(25):
-        val = 1/2048 * (x[i] + 1/2048 * y[i])
-        T.append(val)
-
-
 def main(x0):
-    scaled_x, scaled_y = generate_data_set(x0)
+    [scaled_x, scaled_y] = generate_scaled_data(x0)
 
     #plot the scaled data and save it as a html file
     plotly.offline.plot({

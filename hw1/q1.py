@@ -19,16 +19,14 @@ def generate_random(array, max):
 
 def generate_data(x0, length):
     #initialize arrays
-    x = []
-    y = []
+    w = []
+    w.append(x0)
 
-    #seed the initial values
-    x.append(x0)
-    y.append(lcg(x0))
+    #generate 2000 values
+    generate_random(w, 2000)
 
-    #generate 1000 values
-    generate_random(x, length)
-    generate_random(y, length)
+    x = w[::2]
+    y = w[1::2]
     return x,y
 
 def generate_scaled_data(x0):
