@@ -5,6 +5,7 @@ from plotly.graph_objs import Scatter, Layout
 from random import random
 
 def generate_scaled_data():
+    #generate 1000 random numbers using mersene twister
     x = [random() for x in range(1000)]
     y = [random() for y in range(1000)]
     return x, y

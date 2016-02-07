@@ -1,1 +1,5 @@
+#ignore the txt file of results
+*.txt
+
+#ignore the html plots
 *.html

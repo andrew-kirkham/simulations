@@ -11,20 +11,21 @@ def lcg(previous):
     return (a * previous + c) % m
 
 def generate_random(array, max):
-    #while we haven't hit the max (1000), generate rv
+    #while we haven't hit the max, generate rv using the lcg
     while (len(array) < max):
         previous = array[len(array)-1]
         random_number = lcg(previous)
         array.append(random_number)
 
 def generate_data(x0, length):
-    #initialize arrays
+    #initialize array with x0 as the first element
     w = []
     w.append(x0)
 
     #generate 2000 values
     generate_random(w, 2000)
 
+    #set x to be even elements and y to be odd elements
     x = w[::2]
     y = w[1::2]
     return x,y
@@ -32,8 +33,8 @@ def generate_data(x0, length):
 def generate_scaled_data(x0):
     x, y = generate_data(x0, 1000)
 
-    #scale it by M
-    scaled_x = [ x/2048 for x in x ] 
+    #scale x and y by m to put them in the range [0,1]
+    scaled_x = [ x/2048 for x in x ]
     scaled_y = [ y/2048 for y in y ]
     return scaled_x, scaled_y
 
