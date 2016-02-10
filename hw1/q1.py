@@ -52,4 +52,5 @@ def main(x0):
     print(numpy.cov(scaled_x,scaled_y))
 
 if __name__ == '__main__':
+    #100 is our seed value
     main(100)

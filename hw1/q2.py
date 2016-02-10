@@ -42,7 +42,7 @@ def generate_scaled_data(x0):
     for i in range(l):
         T.append(1/2048 * (x[i] + 1/2048 * y[i]))
     
-    #pick 2000 random variables from T. each value chosen from T is then replaced using the same formula
+    #pick 2000 random variables from T. each value chosen from T is then replaced using the same formula that populated T
     for k in range(2000):
         w.append(T[z[k+1] % l])
         T[z[k+1] % l] = 1/2048 * (x[k+l+1] + 1/2048 * y[k+l+1])
@@ -67,4 +67,5 @@ def main(x0):
     print(numpy.cov(scaled_x,scaled_y))
 
 if __name__ == '__main__':
+    #100 is our seed value
     main(100)
