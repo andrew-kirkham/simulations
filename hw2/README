@@ -1,0 +1,20 @@
+Homework 2 questions
+    1. Write your own implementation of the Box-Muller method 
+        (transformation from uniform to normal)
+    2. Use the function
+        f(x) = c/(1+(x-x0)^2/a)
+        based on the Lorentzian distribution in the rejection method to
+        generate random variables from the Gamma distribution
+        Consider the case where n=5. 
+            Note a, c, x0 are parameters chosen to ensure that f(x) >=p(x) for all x
+        what is the area under f(x) for the parameters you chose?
+        what fraction of candidate samples did you anticipate to be rejected?
+        What fraction of candidate samples were rejected?
+
+USAGE
+    Run each q{1,2,3} file manually or run all_qs. 
+    Covariance matrices will either be displayed on screen or saved to a file.
+
+DEPENDENCIES
+    numpy - generates the covariance matrices
+    plotly - generates the plots for each question
