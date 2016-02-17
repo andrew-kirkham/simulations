@@ -4,6 +4,12 @@ import plotly
 from random import random
 from plotly.graph_objs import Histogram, Layout, Scatter
 
+####
+#items in the homework not done here:
+#   calculating a, c, x0
+#   area under f(x) for the above parameters
+####
+
 #evaluate a given gamma distribution at x
 #we are given the shape is 5 and scale is 1
 #the equation was simplified using wolfram alpha
@@ -15,28 +21,48 @@ def gamma_distribution(x):
         return p_x
 
 #evaluate lorentz at x
-def lorentzian_distribution(x, a, c, x0):
+def lorentzian_distribution(x):
+    #previously chosen values for the lorentz equation
+    #these values were chosen by plotting lorentz vs gamma and choosing values
+    #such that lorentz > gamma for [0,10]
+    a=2
+    c=3
+    x0=0
     f_x = c / (1 + (numpy.power(x - x0, 2) / a))
     return f_x
 
-def rejection_method(a, c, x0):
+#generate 10000 rv from the sample distribution(gamma) and reject those that
+#do not match the target distribution (cauchy)
+def rejection_method():
     accepted = []
-    expected = []
     
     for i in range(10000):
+        #choose a u from a normal distribution
         u=random()
+        #sample a value from g(x) - a gamma distribution
         sample = numpy.random.gamma(5, 1)
-        f_x = lorentzian_distribution(sample, a, c, x0)
+
+        #calculate f(sample) * M
+        f_x = lorentzian_distribution(sample)
+        #calculate g(sample)
         g_x = gamma_distribution(sample)
+        #check for rejection
         if (u <= g_x / f_x):
             accepted.append(sample)
         
-    print(len(accepted))
-    lorentzian_values= [lorentzian_distribution(x, a, c, x0) for x in numpy.arange(0, 10, 0.01)]
-    expected = [gamma_distribution(x) for x in numpy.arange(0,10,0.01)]
-    plot_results(accepted, expected, lorentzian_values)
+    print('Count of accepted values: ', len(accepted))
+    #calculate the rejection percentage and display it out of 100%
+    print('Rejection percentage: ', (10000-len(accepted)) / 100, '%')
+    plot_results(accepted)
 
-def plot_results(accepted, expected, lorentzian):
+#plot the results of the rejection method.
+#Creates a plot that shows a histogram of expected values, the expected distribution
+#and the sampling distribution on top of the expected distribution
+def plot_results(accepted):
+    #create arrays for the expected/target distributions to graph them
+    lorentzian= [lorentzian_distribution(x) for x in numpy.arange(0, 10, 0.01)]
+    expected = [gamma_distribution(x) for x in numpy.arange(0,10,0.01)]
+    
     distplot = plotly.tools.FigureFactory.create_distplot(
             [accepted], ['accepted vars'])
     #plotly.offline.plot(distplot, filename="q2-test.html")
@@ -72,14 +98,6 @@ def plot_results(accepted, expected, lorentzian):
     #save the figure
     plotly.offline.plot(figure, filename="q2.html")
 
-def main():
-    #previously chosen values for the lorentz equation
-    a=2
-    c=3
-    x0=0
-    #area under f(x) is not calculated here
-    rejection_method(a,c,x0)
-
 if __name__=="__main__":
-    main()
+    rejection_method()
 
