@@ -1,0 +1,9 @@
+Homework 3 questions
+
+USAGE
+    Run each q{1,2} file manually 
+    Results will be saved to an html file of the plot
+
+DEPENDENCIES
+    numpy - generates the covariance matrices
+    plotly - generates the plots for each question
