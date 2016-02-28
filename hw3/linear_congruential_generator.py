@@ -16,31 +16,28 @@ def generate_random(array, max):
         previous = array[len(array)-1]
         random_number = lcg(previous)
         array.append(random_number)
+    return array
 
-def generate_data(x0):
+def generate_data(seed, numbers_to_generate):
     #initialize array with x0 as the first element
     w = []
-    w.append(x0)
+    w.append(seed)
 
-    #generate 2000 values
-    generate_random(w, 2000)
+    random_numbers = generate_random(w, numbers_to_generate)
 
-    #set x to be even elements and y to be odd elements
-    x = w[::2]
-    y = w[1::2]
-    return x,y
+    return random_numbers
 
-def generate_scaled_data(x0):
-    x, y = generate_data(x0, 1000)
+def generate_scaled_data(seed, numbers_to_generate):
+    """
+    generate random numbers in the range (0,1)
+    using a lcg
+    """
+    x = generate_data(seed, numbers_to_generate)
 
-    #scale x and y by m to put them in the range [0,1]
+    #scale x by m to put in the range [0,1]
     scaled_x = [ x/2048 for x in x ]
-    scaled_y = [ y/2048 for y in y ]
-    return scaled_x, scaled_y
-
-def main(x0):
-    [scaled_x, scaled_y] = generate_scaled_data(x0)
+    return scaled_x
 
 if __name__ == '__main__':
     #100 is our seed value
-    main(100)
+    generate_scaled_data(100)
