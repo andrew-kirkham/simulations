@@ -17,7 +17,7 @@ def generate_random(array, max):
         random_number = lcg(previous)
         array.append(random_number)
 
-def generate_data(x0, length):
+def generate_data(x0):
     #initialize array with x0 as the first element
     w = []
     w.append(x0)
@@ -40,16 +40,6 @@ def generate_scaled_data(x0):
 
 def main(x0):
     [scaled_x, scaled_y] = generate_scaled_data(x0)
-
-    #plot the scaled data and save it as a html file
-    plotly.offline.plot({
-        "data": [ Scatter(x=scaled_x, y=scaled_y, mode='markers') ],
-        "layout": Layout(title="First Question")
-    }, filename="q1.html")
-
-    #display the covariance
-    print("Q1 Covariance Matrix")
-    print(numpy.cov(scaled_x,scaled_y))
 
 if __name__ == '__main__':
     #100 is our seed value

@@ -49,9 +49,6 @@ def main():
         z_cos.append(z1)
         z_sin.append(z2)
     
-    calculate_stats(z_sin, z_cos)
-    plot_results(u1, u2, z_cos, z_sin)
-
 if __name__=="__main__":
     main()
 
