@@ -5,7 +5,6 @@ from scipy.stats import chi2
 from scipy.integrate import quad
 import numpy
 import box_mueller_transform
-import built_in_random
 import cauchy_distribution
 import linear_congruential_generator
 from random import random
@@ -62,6 +61,7 @@ def get_sample_size(expected_std_dev):
     Calculate the sample size necessary using z-score
     """
     sample_size = ((2.576 * expected_std_dev)/ 0.01) ** 2
+    print("Sample size: ", sample_size)
     return math.floor(sample_size)
 
 def uniform_stats(rands):
@@ -122,13 +122,19 @@ def cauchy():
         actual_var = numpy.var(rands)
         print("Actual mean for ", sample_size, ": ", actual_mean)
         print("Actual var for ", sample_size, ": ", actual_var)
+        #compare cauchy to gamma - our target dist
+        bins = math.floor(1.88 * sample_size ** (2/5))
+        integrand = lambda x: scipy.stats.gamma(5).pdf(x)
+        actual_chi2 = calculate_chi2(rands, bins, integrand)
+        expected_chi2 = chi2.ppf(.99, bins-1)
+        evaluate_results(expected_chi2, actual_chi2)
 
 def gamma():
     """
     Evaluate the gamma distribution as a RNG
     """
-    expected_mean = scipy.stats.gamma(5).mean()
-    sample_size = get_sample_size(expected_mean)
+    expected_var = scipy.stats.gamma(5).var()
+    sample_size = get_sample_size(math.sqrt(expected_var))
     bins = math.floor(1.88 * sample_size ** (2/5))
     rands=scipy.stats.gamma(5).rvs(size=sample_size)
     integrand = lambda x: scipy.stats.gamma(5).pdf(x)
