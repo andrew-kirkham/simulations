@@ -28,8 +28,9 @@ def calculate_chi2(random, bins, integrand):
         count[k] = numpy.size(temp)
         p[k], temp  = scipy.integrate.quad(integrand, bin_ends[k], bin_ends[k+1])
     n = len(random)
-    chi_squared = [(count[k] - n/bins) ** 2 for k in range(1, bins)]
-    return bins/n * sum(chi_squared)
+    expected_counts = [ n * p[k] for k in range(bins) ]
+    chi_squared, temp = scipy.stats.chisquare(count, expected_counts)
+    return chi_squared 
 
 def lcg():
     sample_size = get_sample_size(1/12)
@@ -97,9 +98,24 @@ def cauchy():
     pass
 
 def gamma():
+    expected_mean = scipy.stats.gamma(5).mean()
+    sample_size = get_sample_size(expected_mean)
+    bins = math.floor(1.88 * sample_size ** (2/5))
+    rands=scipy.stats.gamma(5).rvs(size=1000)
+    integrand = lambda x: scipy.stats.gamma(5).pdf(x)
+
+    actual_chi2 = calculate_chi2(rands, bins, integrand)
+    expected_chi2 = chi2.ppf(.99, bins-1)
     
-    #TODO
-    pass
+    gamma_stats(rands)
+    evaluate_results(expected_chi2, actual_chi2)
+
+def gamma_stats(rands):
+    expected_mean = scipy.stats.gamma(5).mean()
+    actual_mean = numpy.mean(rands)
+    expected_var = scipy.stats.gamma(5).var() 
+    actual_var = numpy.var(rands)
+    evaluate_stats(expected_mean, actual_mean, expected_var, actual_var)
 
 def evaluate_stats(expected_mean, actual_mean, expected_var, actual_var):
     print("Expected mean: ", expected_mean, " Actual mean: ", actual_mean)
@@ -121,6 +137,7 @@ def main():
     print("\nBox Mueller transform for normal random numbers")
     box_mueller()
     cauchy()
+    print("\nGamma transform with shape 5 for random numbers")
     gamma()
 
 if __name__=='__main__':
