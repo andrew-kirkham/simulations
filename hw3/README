@@ -22,7 +22,9 @@ Homework 3 questions
     You can use scipy.stats.chi2 as a chi squared calculator
 
 USAGE
-    Run each q{1,2,3,4,5} file manually 
+    Run each chi_squared_test.py file manually 
+        Requires the other RNG files to run
 
 DEPENDENCIES
-    scipy - chi squared calculator
+    scipy - calculate chi squared, integrals, distributions
+    numpy - variance and mean

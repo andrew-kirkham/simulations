@@ -115,8 +115,13 @@ def normal_stats(rands):
     evaluate_stats(expected_mean, actual_mean, expected_var, actual_var)
 
 def cauchy():
-    #TODO
-    pass
+    sample_sizes=[1000, 10000]
+    for sample_size in sample_sizes:
+        rands=cauchy_distribution.rejection_method(sample_size)
+        actual_mean = numpy.mean(rands)
+        actual_var = numpy.var(rands)
+        print("Actual mean for ", sample_size, ": ", actual_mean)
+        print("Actual var for ", sample_size, ": ", actual_var)
 
 def gamma():
     """
@@ -169,6 +174,7 @@ def main():
     built_in_rand()
     print("\nBox Mueller transform for normal random numbers")
     box_mueller()
+    print("\nCauchy transform for normal random numbers")
     cauchy()
     print("\nGamma transform with shape 5 for random numbers")
     gamma()
