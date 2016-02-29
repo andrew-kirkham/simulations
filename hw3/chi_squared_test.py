@@ -9,6 +9,7 @@ import built_in_random
 import cauchy_distribution
 import linear_congruential_generator
 from random import random
+import math
 
 ####
 #TODO: calculate the necessary samples for each rng
@@ -31,8 +32,9 @@ def calculate_chi2(random, bins, integrand):
     return bins/n * sum(chi_squared)
 
 def lcg():
-    random = linear_congruential_generator.generate_scaled_data(100, 2000)
-    bins = 128
+    sample_size = get_sample_size(1/12)
+    random = linear_congruential_generator.generate_scaled_data(100, sample_size)
+    bins = math.floor(1.88 * sample_size ** (2/5))
     integrand = lambda x : 1
 
     actual_chi2 = calculate_chi2(random, bins, integrand)
@@ -41,16 +43,28 @@ def lcg():
     uniform_stats(random)
     evaluate_results(expected_chi2, actual_chi2)
 
+def get_sample_size(expected_std_dev):
+    """
+    Calculate the sample size necesary using z-score
+    """
+    sample_size = ((2.576 * expected_std_dev)/ 0.01) ** 2
+    #sample_size = (expected_mean * (1-expected_mean))/((0.01/2.576)**2)
+    return math.floor(sample_size)
+
 def uniform_stats(rands):
-    expected_mean = (1-0)/2
+    """
+    print out the mean and var of the random distribution
+    """
+    expected_mean = 1/2
     actual_mean = numpy.mean(rands)
-    expected_var = (((1-0+1) ** 2) - 1)/12
+    expected_var = 1/12
     actual_var = numpy.var(rands)
     evaluate_stats(expected_mean, actual_mean, expected_var, actual_var)
 
 def built_in_rand():
-    rands = [random() for k in range(10000)]
-    bins = 1000
+    sample_size = get_sample_size(1/12)
+    rands = [random() for k in range(sample_size)]
+    bins = math.floor(1.88 * sample_size ** (2/5))
     integrand = lambda x : 1
     
     actual_chi2 = calculate_chi2(rands, bins, integrand)
@@ -60,9 +74,9 @@ def built_in_rand():
     evaluate_results(expected_chi2, actual_chi2)
     
 def box_mueller():
-    #TODO
-    rands=box_mueller_transform.main()
-    bins = 1000
+    sample_size = get_sample_size(math.sqrt(.1))
+    bins = math.floor(1.88 * sample_size ** (2/5))
+    rands=box_mueller_transform.main(sample_size)
     integrand = lambda x: scipy.stats.norm.pdf(x)
 
     actual_chi2 = calculate_chi2(rands, bins, integrand)
@@ -74,7 +88,7 @@ def box_mueller():
 def normal_stats(rands):
     expected_mean = scipy.stats.norm.mean()
     actual_mean = numpy.mean(rands)
-    expected_var = scipy.stats.norm.var()
+    expected_var = 0.1 #given by homework
     actual_var = numpy.var(rands)
     evaluate_stats(expected_mean, actual_mean, expected_var, actual_var)
 
@@ -83,6 +97,7 @@ def cauchy():
     pass
 
 def gamma():
+    
     #TODO
     pass
 
