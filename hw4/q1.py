@@ -22,10 +22,10 @@ def part_a():
 
 def part_b():    
     sample_size = 10000
-    rands = [scipy.stats.norm().rvs() for i in range(sample_size)]
+    rands = [scipy.stats.anglit().rvs() for i in range(sample_size)]
     
-    f_x = [numpy.arccos(2*pi * (1-r)-1) for r in rands]
-    #f_x = [(1/(2*math.pi) * (1+numpy.cos(r))) for r in rands]
+    #f_x = [numpy.arccos(2*math.pi * (1-r)-1) for r in rands]
+    f_x = [(1/(2*math.pi) * (1+numpy.cos(r))) for r in rands]
     g_x = [((2*math.pi) * (1+numpy.cos(x))**(-2/3)) for x in f_x]
     print_results(g_x)
 
