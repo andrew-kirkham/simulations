@@ -19,9 +19,9 @@ def main():
         var_anti.append(numpy.var([estimator(r) for r in rands]))
         var_star.append(cstar)
 
-    print('star: ', numpy.mean(cstar))
-    print('anti: ', numpy.mean(var_anti))
-    print('control: ', numpy.mean(var_control))
+    print('cstar: ', numpy.mean(cstar))
+    print('var(x,y): ', numpy.mean(var_anti))
+    print('var(z): ', numpy.mean(var_control))
 
 if __name__=='__main__':
     main()
