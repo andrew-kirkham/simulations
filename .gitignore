@@ -67,3 +67,4 @@ target/
 #homework specific files - outputs from scripts
 *.txt
 *.html
+*.pdf
