@@ -64,7 +64,8 @@ target/
 #vim swp files
 *.swp
 
-#homework specific files - outputs from scripts
+#homework specific files - outputs from scripts or examples
 *.txt
 *.html
 *.pdf
+*.m
