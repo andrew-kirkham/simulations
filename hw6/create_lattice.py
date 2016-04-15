@@ -19,6 +19,7 @@ def create_lattice(l, h, j, initial_lattice,
             [accepted, accepted_prob] = test_grid(h, j, padded_new_lattice, r, c, t_tilde)
             if accepted:
                 lattice = new_lattice
-        lattice_full[1, 1, x] = lattice
-    lattice_full = lattice_full(1, 1, range(end-n_usable_configs))
+        lattice_full[0, 0, x] = lattice
+    size_z = lattice_full.shape[2]
+    lattice_full = lattice_full[0][0][size_z-n_usable_configs+1:size_z]
     return lattice_full

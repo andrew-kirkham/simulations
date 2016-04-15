@@ -21,20 +21,20 @@ def main():
         for config in range(n_usable_configs):
             lattice_pad[:][:][config] = lattice[:][:][config]
         
-        end_x = lattice_pad.shape(0)
-        end_y = lattice_pad.shape(1)
-        end_z = lattice_pad.shape(2)
-        north = lattice_pad[1:end_x-2][2:end_y-1][:]
-        south = lattice_pad[3:end_x][2:end_y-1][:]
-        east = lattice_pad[2:end_x-1][3:end_y][:]
-        west = lattice_pad[2:end_x-1][1:end_y-2][:]
+        end_x = lattice_pad.shape[0]
+        end_y = lattice_pad.shape[1]
+        end_z = lattice_pad.shape[2]
+        north = lattice_pad[0:end_x-2][1:end_y-1][:]
+        south = lattice_pad[2:end_x][1:end_y-1][:]
+        east = lattice_pad[1:end_x-1][2:end_y][:]
+        west = lattice_pad[1:end_x-1][0:end_y-2][:]
 
         f = -1 * h * numpy.sum(numpy.sum(lattice))
         s = -1 * j/2 * numpy.sum(numpy.sum(lattice * 
             (north + south + east + west)))
         energy_temp = f + s
         energy[temp] = sum(energy_temp)/n_usable_configs
-        last_lattice = lattice[:][:][lattice.shape(2)]
+        last_lattice = lattice[:][:][lattice.shape[2]]
 
 if __name__=='__main__':
     main()
