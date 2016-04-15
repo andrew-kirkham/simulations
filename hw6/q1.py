@@ -1,6 +1,6 @@
 #!/bin/python3
 import numpy
-from hw6 import create_lattice
+from create_lattice import create_lattice
 
 def main():
     l = 15
