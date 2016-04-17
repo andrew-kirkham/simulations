@@ -2,7 +2,6 @@
 import numpy
 
 def pad(m):
-    print('shape: ', m.shape)
     #add first column to the end and last column to the front
     first_col = numpy.array([m[:,0]]).T
     last_col = numpy.array([m[:,-1]]).T
