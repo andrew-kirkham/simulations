@@ -7,7 +7,8 @@ from pad import pad
 def create_lattice(l, h, j, initial_lattice, 
         n_configs, n_usable_configs, t_tilde):
     
-    lattice = numpy.zeros((l, l, n_configs))
+    config = numpy.zeros((l, l, n_configs))
+    lattice = initial_lattice
 
     for x in range(0, n_configs):
         for t in range(0, l**2):
