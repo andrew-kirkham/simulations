@@ -12,6 +12,7 @@ def main():
     n_usable_configs = 200
     temps = numpy.linspace(10, .5, 20) 
     specific_heat = numpy.zeros((len(temps), 1))
+    stable_spins = numpy.zeros((len(temps),1))
 
     previous_lattice = [[round(random()) * 2 -1 for x in range(l)] for y in range(l)]
     previous_lattice = numpy.array(previous_lattice)
@@ -36,11 +37,13 @@ def main():
                 (north + south + east + west))
         energy = (f+s)/n_usable_configs
         heat = (energy**2/n_usable_configs - energy**2)/(temp**2) 
-        print(heat)
         specific_heat[index] = heat 
+        
+        #q5
+        spin = (lattice==north) & (lattice==south) & (lattice==east) & (lattice==west)
+        stable_spins[index] = numpy.sum(spin)/n_usable_configs
+        
         previous_lattice = lattice[:,:,-1]
-
-
 
 if __name__=='__main__':
     main()
