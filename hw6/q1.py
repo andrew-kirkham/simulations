@@ -1,5 +1,7 @@
 #!/bin/python3
 import numpy
+import plotly
+from plotly.graph_objs import Scatter, Layout
 from create_lattice import create_lattice
 from pad import pad
 
@@ -34,9 +36,13 @@ def main():
             (north + south + east + west))
         energy_temp = (f+s)/n_usable_configs
         energy[iTemp] = energy_temp
-        print('energy for ', temp, ' = ', energy_temp)
+        print("energy for ", temp, " = ", energy_temp)
         last_lattice = lattice[:,:,-1]
     print(energy)
+    plotly.offline.plot({
+        "data": [ Scatter(x=temps, y=energy, mode="markers") ],
+        "layout": Layout(title="Energy Consumption")
+        }, filename="q1.html")
 
-if __name__=='__main__':
+if __name__=="__main__":
     main()

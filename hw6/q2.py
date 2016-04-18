@@ -1,5 +1,7 @@
 #!/bin/python3
 import numpy
+import plotly
+from plotly.graph_objs import Scatter, Layout
 from random import random
 from create_lattice import create_lattice
 from pad import pad
@@ -44,6 +46,15 @@ def main():
         stable_spins[index] = numpy.sum(spin)/n_usable_configs
         
         previous_lattice = lattice[:,:,-1]
-
-if __name__=='__main__':
+    
+    plotly.offline.plot({
+        "data": [ Scatter(x=temps, y=specific_heat, mode="markers") ],
+        "layout": Layout(title="Specific Heat")
+        }, filename="q2.html")
+    plotly.offline.plot({
+        "data": [ Scatter(x=temps, y=stable_spins, mode="markers")],
+        "layout": Layout(title="Stable Spins")
+        }, filename="q5.html")
+    
+if __name__=="__main__":
     main()
