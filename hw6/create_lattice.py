@@ -1,6 +1,7 @@
 #!/bin/python3
 import random
 import numpy
+from math import floor
 from test_grid import test_grid
 from pad import pad
 
@@ -12,8 +13,8 @@ def create_lattice(l, h, j, initial_lattice,
 
     for x in range(0, n_configs):
         for t in range(0, l**2):
-            r = random.random() * l
-            c = random.random() * l
+            r = floor(random.random() * l)
+            c = floor(random.random() * l)
             new_lattice = lattice
             new_lattice[r, c] = new_lattice[r,c] * -1
             padded_new_lattice = pad(new_lattice)

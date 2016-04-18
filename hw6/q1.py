@@ -15,8 +15,10 @@ def main():
     last_lattice = initial_energy
     
     for iTemp, temp in enumerate(temps):
+        print(temp)
         lattice = create_lattice(l, h, j, last_lattice, n_configs, n_usable_configs, temp)
         lattice_pad = numpy.zeros((l+2, l+2, n_usable_configs))
+
         for config in range(n_usable_configs):
             lattice_pad[:,:,config] = pad(lattice[:,:,config])
         
