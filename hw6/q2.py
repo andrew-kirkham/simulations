@@ -51,8 +51,12 @@ def main():
         "data": [ Scatter(x=temps, y=specific_heat, mode="markers") ],
         "layout": Layout(title="Specific Heat")
         }, filename="q2.html")
+    fitted_line = scipy.stats.powerlaw.fit(stable_spins)
+    power_eq = scipy.stats(power_eq)
+    power_law = [power_eq(x) for x in temps]
     plotly.offline.plot({
-        "data": [ Scatter(x=temps, y=stable_spins, mode="markers")],
+        "data": [ Scatter(x=temps, y=stable_spins, mode="markers"),
+            Scatter(x=temps, y=power_law, mode="lines")],
         "layout": Layout(title="Stable Spins")
         }, filename="q5.html")
     
