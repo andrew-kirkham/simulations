@@ -16,19 +16,22 @@ def main():
             exact.append(exact_soln(t))
             huen.append(huen_soln(t))
 
-        euler_avg = numpy.mean(euler)
-        exact_avg = numpy.mean(exact)
-        huen_avg = numpy.mean(huen)
+        euler_avg = numpy.mean(euler, axis=0)
+        exact_avg = numpy.mean(exact, axis=0)
+        huen_avg = numpy.mean(huen, axis=0)
+
+        euler_err = (euler_avg-exact_avg)**2
+        huen_err = (huen_avg-exact_avg)**2
         
         #plot each solution against each other
         x_data = numpy.linspace(0,1,1/t)
-        exact_plot = Scatter(x=x_data, y=exact_avg, name="Exact Soln")
-        euler_plot = Scatter(x=x_data, y=euler_avg, name="Euler Soln")
-        huen_plot = Scatter(x=x_data, y=huen_avg, name="Huen Soln")
+        #exact_plot = Scatter(x=x_data, y=exact_avg, name="Exact Soln")
+        euler_plot = Scatter(x=x_data, y=euler_err, name="Euler Err")
+        huen_plot = Scatter(x=x_data, y=huen_err, name="Huen Err")
         
         #we are expecting huen to converge to exact faster
         figure = dict(
-                data=[exact_plot, euler_plot, huen_plot], 
+                data=[euler_plot, huen_plot], 
                 layout = Layout(title="2^{0}".format((index+3)*-1))
                 )
         filename="q2_{0}.html".format(index)
