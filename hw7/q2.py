@@ -10,15 +10,21 @@ def main():
         euler = []
         exact = []
         huen = []
-        #calculate each solution type
-        euler=euler_marn(t)
-        exact=exact_soln(t)
-        huen=huen_soln(t)
+        for iSim in range(100):
+            #calculate each solution type
+            euler.append(euler_marn(t))
+            exact.append(exact_soln(t))
+            huen.append(huen_soln(t))
+
+        euler_avg = numpy.mean(euler)
+        exact_avg = numpy.mean(exact)
+        huen_avg = numpy.mean(huen)
+        
         #plot each solution against each other
         x_data = numpy.linspace(0,1,1/t)
-        exact_plot = Scatter(x=x_data, y=exact, name="Exact Soln")
-        euler_plot = Scatter(x=x_data, y=euler, name="Euler Soln")
-        huen_plot = Scatter(x=x_data, y=huen, name="Huen Soln")
+        exact_plot = Scatter(x=x_data, y=exact_avg, name="Exact Soln")
+        euler_plot = Scatter(x=x_data, y=euler_avg, name="Euler Soln")
+        huen_plot = Scatter(x=x_data, y=huen_avg, name="Huen Soln")
         
         #we are expecting huen to converge to exact faster
         figure = dict(
