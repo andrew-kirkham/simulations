@@ -3,18 +3,18 @@ import numpy
 from random import random
 
 def growth(t_index, h, gamma, k, mu):
-    l = numpy.size(h, 1)
+    l = h.shape[0]
     rho = 1 + (k * numpy.exp((gamma/2)*2 - mu))
-    grid = numpy.zeros(l, l, t-index-1)
+    grid = numpy.zeros((l, l, t_index))
 
     for t in range(t_index-1):
-        r = random() * 10
-        c = random() * 10
+        r = numpy.random.randint(10)
+        c = numpy.random.randint(10)
 
-        south = (h[r][c] <= h[r % l + 1][c])
-        north = (h[r][c] <= h[(r-2) % l + 1][c])
-        east = (h[r][c] <= h[r][c % l + 1])
-        west = (h[r][c] <= h[r][(c-2) % l + 1])
+        south = (h[r][c] <= h[r % l][c])
+        north = (h[r][c] <= h[(r-2) % l][c])
+        east = (h[r][c] <= h[r][c % l])
+        west = (h[r][c] <= h[r][(c-2) % l])
 
         s = south + north + east + west
         w = 1
@@ -22,11 +22,12 @@ def growth(t_index, h, gamma, k, mu):
         
         rj = w + wde
         if random() <= rj/rho:
-            c = numpy.random.choice(a=(-1,1),
+            ch = numpy.random.choice(a=(-1,1),
                     size=1,
                     replace=True,
                     p=numpy.array((wde, w))/rj)
-            h[r][c] = h[r][c] = c
-        grid[:][:][t_index]=h
+            h[r][c] = h[r][c] + ch
+
+        grid[:, :, t]=h
 
     return grid
