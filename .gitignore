@@ -64,6 +64,9 @@ target/
 #vim swp files
 *.swp
 
+#Pycharm folder
+.idea/
+
 #homework specific files - outputs from scripts or examples
 *.txt
 *.html
