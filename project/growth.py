@@ -23,7 +23,7 @@ def growth(t_index, h, gamma, k, mu):
 
         rj = w + wde
         if random() <= (rj / rho):
-            prob= numpy.array((wde, w)) / rj
+            prob = numpy.array((wde, w)) / rj
             ch = numpy.random.choice(a=(-1, 1),
                                      size=1,
                                      replace=True,
