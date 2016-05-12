@@ -8,9 +8,12 @@ from pad import pad
 
 
 def main():
-    gamma_list = [2, 3, 4]
-    mu_list = [.1, .3, .5]
+    test_gamma()
+    test_mu()
 
+
+def test_gamma():
+    gamma_list = [2, 3, 4]
     avg_traces = []
     mono_traces = []
     rough_traces = []
@@ -18,16 +21,23 @@ def main():
 
     for gamma in gamma_list:
         print("gamma: ", gamma)
-        [avg_plot, mono_plot, rough_plot, coverage_plot] = evaluate(gamma, mu_list[2])
+        [avg_plot, mono_plot, rough_plot, coverage_plot] = evaluate(gamma, .5)
         avg_traces.append(avg_plot)
         mono_traces.append(mono_plot)
         rough_traces.append(rough_plot)
         coverage_traces.append(coverage_plot)
     plot(avg_traces, mono_traces, rough_traces, coverage_traces)
 
+
+def test_mu():
+    mu_list = {.1, .3, .5}
+    avg_traces = []
+    mono_traces = []
+    rough_traces = []
+    coverage_traces = []
     for mu in mu_list:
         print("mu:, ", mu)
-        [avg_plot, mono_plot, rough_plot, coverage_plot] = evaluate(gamma_list[2], mu)
+        [avg_plot, mono_plot, rough_plot, coverage_plot] = evaluate(4, mu)
         avg_traces.append(avg_plot)
         mono_traces.append(mono_plot)
         rough_traces.append(rough_plot)
