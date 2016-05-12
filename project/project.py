@@ -30,6 +30,8 @@ def main():
         t_index += 1
         temp = -np.log(random()) / (1 / lamda)
         t += temp
+    times = times[:t_index]
+    times = np.squeeze(times)
 
     avg_list = np.zeros((t_index, num_tests))
     avg_vs_gamma = np.zeros((t_index, num_tests, 1))
@@ -74,12 +76,34 @@ def main():
         rough_vs_gamma[:, :, iGamma] = rough_list
         coverage_vs_gamma[:, :, iGamma] = coverage_list
 
+    plot(avg_vs_gamma, mono_layer_vs_gamma, rough_vs_gamma, coverage_vs_gamma, times)
+
+
+def plot(avg_vs_gamma, mono_layer_vs_gamma, rough_vs_gamma, coverage_vs_gamma, times):
     # plot stuff
-    data = np.mean(avg_vs_gamma, 2)
+    avg_layer = np.mean(avg_vs_gamma[:, :, 0], 1)
     plotly.offline.plot({
-        "data": [Scatter(x=times, y=data)],
-        "layout": Layout(title="avg layer vs time")
+        "data": [Scatter(x=times, y=avg_layer)],
+        "layout": Layout(title="avg layer height vs time")
+    }, filename="layer.html")
+
+    mono_layer = np.mean(mono_layer_vs_gamma[:, :, 0], 1)
+    plotly.offline.plot({
+        "data": [Scatter(x=times, y=mono_layer)],
+        "layout": Layout(title="number of mono layers vs time")
     }, filename="mono.html")
+
+    rough_layer = np.mean(rough_vs_gamma[:, :, 0], 1)
+    plotly.offline.plot({
+        "data": [Scatter(x=times, y=rough_layer)],
+        "layout": Layout(title="surface roughness vs time")
+    }, filename="surface.html")
+
+    coverage_layer = np.mean(coverage_vs_gamma[:, :, 0], 1)
+    plotly.offline.plot({
+        "data": [Scatter(x=times, y=coverage_layer)],
+        "layout": Layout(title="step coverage vs time")
+    }, filename="step.html")
 
 
 if __name__ == '__main__':
