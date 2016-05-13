@@ -97,8 +97,8 @@ def evaluate(gamma, mu):
 
         grid[grid < 0] = 0
         avg_list[:, iTest] = np.squeeze(np.mean(np.mean(grid, 0), 0))
-        mono_layer_list[:, iTest] = np.squeeze(np.floor((np.sum(np.sum(grid, 0), 0) / l ** 2)))
-        coverage_list[:, iTest] = np.squeeze(np.sum(np.sum(grid >= nu, 0), 0 / l ** 2))
+        mono_layer_list[:, iTest] = np.squeeze(np.floor((np.sum(np.sum(grid, 0), 0)) / l ** 2))
+        coverage_list[:, iTest] = np.squeeze(np.sum(np.sum(grid >= nu, 0), 0) / l ** 2)
 
     avg_plot = Scatter(x=times, y=np.mean(avg_list, 1), name="gamma = " + str(gamma) + " mu = " + str(mu))
     mono_plot = Scatter(x=times, y=np.mean(mono_layer_list, 1), name="gamma = " + str(gamma) + " mu = " + str(mu))
